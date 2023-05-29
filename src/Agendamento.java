@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -149,7 +150,7 @@ public class Agendamento extends javax.swing.JFrame {
     }//GEN-LAST:event_finalizarConsultaBtnActionPerformed
 
     private void excluirConsultaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirConsultaBtnActionPerformed
-        // TODO add your handling code here:
+        excluirConsulta(getPosicaoConsulta());
     }//GEN-LAST:event_excluirConsultaBtnActionPerformed
 
     /**
@@ -228,6 +229,41 @@ public class Agendamento extends javax.swing.JFrame {
          
      
 }
+    private void executaMetodo(){
+        atualizar();
+    }
+    private int getPosicaoConsulta(){
+           int posConsulta = dadosTbl.getSelectedRow();
+           if(posConsulta == -1 ){
+               JOptionPane.showMessageDialog(rootPane, "Selecione uma consulta");
+           };
+           
+        return posConsulta;
+    }
     
+    private void excluirConsulta(int posConsulta){
+        
+       if(posConsulta >=0){
+           String[] options = {"Sim","Não"};
+           int deletar = JOptionPane.showOptionDialog(rootPane,
+                   "Tem certeza que deseja excluir?",
+                   "Exclusão de aluno",
+                   JOptionPane.DEFAULT_OPTION,
+                   JOptionPane.QUESTION_MESSAGE,
+                   null,
+                   options,
+                   options[0]
+                   );
+           
+           
+           if(deletar == 0){
+               ListaConsulta.listar().remove(posConsulta);
+               atualizar();
+           }
+       }else{
+           dadosTbl.clearSelection();
+       }
+      
+    }
 
 }
